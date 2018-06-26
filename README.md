@@ -33,5 +33,6 @@ For a Lab5, it also add interactive on the table based on Lab 3 using AngularJS 
 ```
 For a Assigment 1, it is example of creating a Mary Brown interactive food menu for online delivery. 
 
-It use Javascript to create a UI logic for the food menu interface.It only a simple food menu where the user can add, update and delete their order.
+It use Javascript to create a UI logic for the food menu interface.
+It only a simple food menu where the user can add, update and delete their order.
 ```
