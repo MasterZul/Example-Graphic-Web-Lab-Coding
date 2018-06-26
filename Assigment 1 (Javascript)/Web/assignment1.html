@@ -1,0 +1,244 @@
+<html>
+  <head>
+   <title>Assignment 1</title>
+	<script>
+	  var tempName;
+	  var tempPrice;
+	  var tempQty
+	  var cart = [];
+	  
+	  // --- Constructor -----------------
+	  function Item(item, price, qty) {
+		this.name = item;
+		this.price = price;
+		this.quantity = qty;
+		this.totalPrice = this.price * this.quantity;
+	  }
+	  
+	  // --- Choose Item ------------------
+	  // 1. display item's detail into add/update row
+	  // 2. assign item's detail into temporary variable
+	  // 3. set quantity back to '1'
+	  function chooseItem(item, price) {
+		alert(item + ": RM " + price.toFixed(2));
+		document.getElementById("item").innerHTML = tempName = item;
+		document.getElementById("price").innerHTML = price.toFixed(2);
+		tempPrice = price;
+		document.getElementById("qty").value = 1;
+	  }
+	  
+	  // ---Add/Update Item ---------------
+	  // 1. validation: (i)is quantity input a number? (ii)is item has been chosen?
+	  // 2. add first item (if cart is empty), calculate total
+	  // 3. update item (if item already exist), calculate total
+	  // 4. else, add as new item, calculate total
+	  // ** add item: (i) push new Item() into cart array, (ii) addRow()
+	  function itemAddUpdate() {
+		//alert("Add/Update item");
+		
+		tempQty = parseInt(document.getElementById("qty").value); // assign item's quantity input into temporary variable
+		
+		// 1. validation
+		if(tempName == undefined) { //check if item chosen
+			alert("Please choose item first.");
+			return;
+		}
+		else if(isNaN(tempQty)) { // check if quantity input is number
+			alert("Please enter number");
+			document.getElementById("qty").value = 1;
+			return;
+		}
+		else if(tempQty < 1) { //check if quantity more then 1
+			alert("Please enter positive number");
+			document.getElementById("qty").value = 1;
+			return;
+		}
+		// 2. add first item (if cart is empty)
+		if(cart.length == 0) {
+			cart.push(new Item(tempName, tempPrice, tempQty));
+			addRow();
+			calcTotal();
+			return;
+		}
+		//cart is not empty
+		else { 
+			// 3. update item (if item exist)
+			for(i=0; i<cart.length; i++){ 
+				if(cart[i].name == tempName){ //check if item exist
+					if(cart[i].quantity == tempQty){ //check if quantity is same
+						alert("No update");
+						return;
+					}
+					else if (confirm("Update " + cart[i].name + "?") != true) { // prompt to confirm update
+						alert("Update canceled");
+						return;
+					}
+					else { //if item exist, quantity is not same, prompt update is true --> update item
+						cart[i].quantity = cart[i].quantity  + tempQty;
+						cart[i].totalPrice = cart[i].quantity * tempPrice;
+						document.getElementById("tblmain").rows[i + 2].cells[2].innerHTML = cart[i].quantity;
+						document.getElementById("tblmain").rows[i + 2].cells[3].innerHTML = cart[i].totalPrice.toFixed(2);
+						calcTotal();
+						return;
+					}
+				}
+			}		
+			// 4. add new item (if item not exist)
+			cart.push(new Item(tempName, tempPrice, tempQty));
+			addRow();
+			calcTotal();
+		}
+	  }
+	  
+	  // -- Add Row --
+	  // 1. insert row,<tr> element into table
+	  // 2. insert columns into the row
+	  // 3. assign value into column
+	  // 4. add delete to first column
+	  function addRow(){
+		
+		var index = cart.length - 1;	// get the last item's index in cart (dia tolakkan dgn 1 sebab index mula dengan 0)
+		
+		// 1. insert row
+		var row = document.createElement("tr");      //buat row which is <tr>
+		var totalrow = document.getElementById("total"); //dapatkan id untuk <total>
+		totalrow.parentNode.insertBefore(row, totalrow); //masukkan kan row element <tr> sebelum toalrow element <total> punya
+		//var row = document.getElementById("tblmain").insertRow(cart.length + 1);
+		
+		// 2. insert 4 column into row
+		for (i = 0; i<=Item.length; i++) {
+			row.appendChild(document.createElement("td")); // dia masukkan kan column <td> tu dalam <tr> dalam kes ni diamasukkan 4 <td> dalam 1 <tr>
+			
+			if(i>0) row.children[i].style.textAlign = "right";
+			if(i==2) row.children[i].style.textAlign = "center";
+		}
+		
+		// 3. put item's detail from cart into column
+		row.children[0].innerHTML = cart[index].name + " - ";
+		row.children[1].innerHTML = cart[index].price.toFixed(2);
+		row.children[2].innerHTML = cart[index].quantity;
+		row.children[3].innerHTML = cart[index].totalPrice.toFixed(2);
+		
+		var del_ref = document.createElement("a");
+		row.children[0].appendChild(del_ref);
+		del_ref.innerHTML = "Delete";
+		del_ref.href = "#";
+		
+		//4. call itemDelete(<tr>...</tr>), 'this' is <a>, in hierarchy: <tr><th><a>
+		del_ref.onclick = function(){ itemDelete(this.parentNode.parentNode) }; 
+		
+		debugging();
+	  }
+	  
+	  // --- Delete Item ------------------
+	  // 1. prompt 'confirm delete?'
+	  // 2. delete item in cart
+	  // 3. delete item's row in table
+	  function itemDelete(row) {
+		// alert("Delete item");
+		
+		// 1. confirm?
+		if (confirm("Delete " + cart[row.rowIndex-2].name + "?") == false) {
+			alert("Delete order canceled");
+			return;
+		}
+		// 2. delete item in array cart
+		cart.splice(row.rowIndex - 2, 1);
+		// 3. delete row
+		row.parentNode.removeChild(row);
+		calcTotal();
+		debugging();
+	  }
+	  
+	  // -- Calculate total -- //total = Harga keseluruhan semua cart totalPrice = Harga untuk cart tertentu berdasarkan index number contoh barang [0] ialah = 5.00 * 4 = 20.0
+	  function calcTotal() {
+		var total = 0;
+		for(i = 0; i<cart.length; i++){
+			total += cart[i].totalPrice;
+		}
+		document.getElementById("totalpay").innerHTML = total.toFixed(2);
+	  }
+	  
+	  // -- Display array's item --
+	  function debugging(){
+		console.clear();
+		console.log("cart:");
+		for(i = 0; i<cart.length; i++){
+			console.log( " " + i + ": " + cart[i].name + 
+						 ", RM " + cart[i].price.toFixed(2) + 
+						 ", " + cart[i].quantity);
+		}
+		console.log(cart);
+	  }
+	  
+	</script>
+  </head>
+
+  <body>
+    <div style="float:left;">
+      <img src="menu.gif" width="500" height="487" alt="Planets" usemap="#menumap"></td>
+    </div>
+
+    <div style="float:left;">
+      <table border="1" width="480px" id="tblmain">
+        <tr><th colspan="4">Order Form</th></tr>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Qty * Price</th>
+        </tr>
+
+        <tr id="total">
+          <th colspan="3" align="right"><b>TOTAL (RM)</b></th>
+          <th id="totalpay" align="right">0</th>
+        </tr>
+
+        <tr id="add">
+          <td id="item">...</td>
+          <td id="price" align="right">...</td>
+          <td align="center"><input type="text" id="qty" size="3" style="text-align:center;" value=1></td>
+          <td align="center"><input type="button" value="Add/Update" onclick="itemAddUpdate();"></td>
+        </tr>
+      </table>
+    </div>
+    <div style="float:left;">
+    <pre>
+    Muhammad Zulkifli Bin Zainul
+    </pre>
+    </div>
+
+    <map name="menumap">
+      <area shape="rect" coords="0,138,23,154" alt="Chicken Burger"
+            href="javascript: chooseItem('Chicken Burger', 8.8);" >
+      <area shape="rect" coords="128,138,147,154" alt="Hotouch Burger"
+            href="javascript: chooseItem('Hotouch Burger', 11.1);" >
+      <area shape="rect" coords="252,138,272,154" alt="Tower Burger"
+            href="javascript: chooseItem('Tower Burger', 13.8);" >
+      <area shape="rect" coords="378,138,395,154" alt="Fish Fillet Burger"
+            href="javascript: chooseItem('Fish Fillet Burger', 11.25);" >
+
+      <area shape="rect" coords="0,282,23,298" alt="Lucky Plate"
+            href="javascript: chooseItem('Lucky Plate', 11.90);" >
+      <area shape="rect" coords="128,282,147,298" alt="Chick-A-Licious"
+            href="javascript: chooseItem('Chick-A-Licious', 13.30);" >
+      <area shape="rect" coords="252,282,272,298" alt="Chick-A-Mix"
+            href="javascript: chooseItem('Chick-A-Mix', 11.90);" >
+      <area shape="rect" coords="377,282,395,298" alt="Fish 'n' Chip"
+            href="javascript: chooseItem('Fish \'n\' Chip', 13.90);" >
+
+      <area shape="rect" coords="0,430,23,446" alt="Nasi Marrybrown"
+            href="javascript: chooseItem('Nasi Marrybrown', 9.90);" >
+      <area shape="rect" coords="128,430,147,446" alt="Nasi Ayam MB"
+            href="javascript: chooseItem('Nasi Ayam MB', 10.30);" >
+      <area shape="rect" coords="252,430,272,446" alt="Mi Kari MB"
+            href="javascript: chooseItem('Mi Kari MB', 9.50);" >
+      <area shape="rect" coords="335,430,354,446" alt="Chicken Porridge"
+            href="javascript: chooseItem('Chicken Porridge', 6.50);" >
+      <area shape="rect" coords="418,430,436,446" alt="Seafood Porridge"
+            href="javascript: chooseItem('Seafood Porridge', 7.50);" >
+
+
+    </map>
+  </body>
+</html>
