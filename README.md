@@ -44,7 +44,8 @@ AngularJS language
 
 **Project 1**
 ```
-For a Project 1, It also function as a food menu interface for online delivery. It has own database to store the data where the AJAX
-function as to open and send to database. JSON language been use as a format to store the data. AngularJS is the language that
-operate the UI logic for this food menu interface.
+For a Project 1, It also function as a food menu interface for online delivery. It has own database 
+to store the data where the AJAXfunction as to open and send to database. JSON language been use 
+as a format to store the data. AngularJS is the language thatoperate the UI logic for this 
+food menu interface.
 ```
