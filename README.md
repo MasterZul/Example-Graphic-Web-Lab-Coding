@@ -41,3 +41,10 @@ It only a simple food menu where the user can add, update and delete their order
 For a Assigment 1, It same with the Assigment 1 but for this time it convert Javascript language into 
 AngularJS language
 ```
+
+**Project 1**
+```
+For a Project 1, It also function as a food menu interface for online delivery. It has own database to store the data where the AJAX
+function as to open and send to database. JSON language been use as a format to store the data. AngularJS is the language that
+operate the UI logic for this food menu interface.
+```
