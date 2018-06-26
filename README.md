@@ -38,6 +38,6 @@ It only a simple food menu where the user can add, update and delete their order
 
 **Assignment 2**
 ```
-For a Assigment 1, It same with the Assigment 1 but for this time 
-it convert Javascript language into AngularJS language
+For a Assigment 1, It same with the Assigment 1 but for this time it convert 
+Javascript language into AngularJS language
 ```
