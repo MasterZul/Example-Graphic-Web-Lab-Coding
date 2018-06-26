@@ -1,5 +1,6 @@
 # Example-Graphic-Web-Lab-Coding
 Example Coding from Graphic Website coding that I learn.
+In this coding there are example programming language for HTML, CSS, Javascript, PHP, AJAX, JSON, JQuery and AngularJS.
 
 **Lab 1**
 ```
