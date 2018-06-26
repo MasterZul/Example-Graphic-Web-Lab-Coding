@@ -28,3 +28,16 @@ For a Lab4, it add interactive on the table based on Lab 3 by using jQuery code.
 ```
 For a Lab5, it also add interactive on the table based on Lab 3 using AngularJS code for the logic UI.
 ```
+
+**Assignment 1**
+```
+For a Assigment 1, it is example of creating a Mary Brown interactive food menu for online delivery. 
+It use Javascript to create a UI logic for the food menu interface.
+It only a simple food menu where the user can add, update and delete their order.
+```
+
+**Assignment 2**
+```
+For a Assigment 1, It same with the Assigment 1 but for this time it convert Javascript language into 
+AngularJS language
+```
