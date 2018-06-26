@@ -8,7 +8,9 @@ For a Lab1 it crete table layout using standard HTML and CSS code
 
 **Lab 2**
 ```
-For a Lab2 it crete table layout using bootstrap tha talready been provided by link:https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
+For a Lab2 it crete table layout using bootstrap that already been provided by
+
+link:https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css
 ```
 
 **Lab 3**
